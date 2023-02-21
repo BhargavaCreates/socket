@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Restaurant Management</title>
+  </head>
+  <body>
+    <h1>Restaurant Management</h1>
+    <input id="input" type="text" />
+    <button id="send">Send</button>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+      const socket = io();
+
+      socket.on('message', (msg) => {
+        const p = document.createElement('p');
+        p.innerHTML = msg;
+        document.body.appendChild(p);
+      });
+
+      document.getElementById('send').addEventListener('click', () => {
+        const input = document.getElementById('input');
+        const msg = input.value;
+        socket.emit('message', msg);
+        input.value = '';
+      });
+    </script>
+  </body>
+</html>
